@@ -31,7 +31,8 @@
 if( !defined( 'MEDIAWIKI' ) )
     die( -1 );
 
-require_once( dirname( dirname( __FILE__ ) ) . '/includes/SkinTemplate.php');
+global $IP;
+require_once( $IP . '/includes/SkinTemplate.php');
 
 // Clear floats for ArticleViewHeader {
 if (!function_exists('articleHeaderClearFloats'))

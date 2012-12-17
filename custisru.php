@@ -157,8 +157,8 @@ class CustisRuTemplate extends QuickTemplate {
 <?php   }
         if($this->data['trackbackhtml']) print $this->data['trackbackhtml']; ?>
     </head>
-<body<?php if($this->data['body_ondblclick']) { ?> ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>
-<?php if($this->data['body_onload']) { ?> onload="<?php $this->text('body_onload') ?>"<?php } ?>
+<body<?php if(isset($this->data['body_ondblclick'])) { ?> ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>
+<?php if(isset($this->data['body_onload'])) { ?> onload="<?php $this->text('body_onload') ?>"<?php } ?>
  class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?> <?php $this->text('skinnameclass') ?>">
 
 <table class="cen header screenonly">

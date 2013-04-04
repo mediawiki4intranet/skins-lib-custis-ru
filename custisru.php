@@ -379,7 +379,7 @@ class CustisRuTemplate extends QuickTemplate {
                 'id'   => 't-whatlinkshere',
                 'text' => $this->translator->translate('whatlinkshere'),
             );
-        if($this->data['nav_urls']['recentchangeslinked'])
+        if(!empty($this->data['nav_urls']['recentchangeslinked']))
             $cont[] = array(
                 'href' => $this->data['nav_urls']['recentchangeslinked']['href'],
                 'id'   => 't-recentchangeslinked',

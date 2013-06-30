@@ -3,12 +3,6 @@
  * MediaWiki skin used on lib.custis.ru
  * ATTENTION: If you plan to use it remove the logo as it's a registered trademark.
  *
- * Configuration:
- *   $wgCatlinksTop =
- *     false:  (default) Show category links below article content
- *     true:   Show category links below and above article content
- *     'only': Show category links above article content only
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -111,7 +105,7 @@ class CustisRuTemplate extends QuickTemplate {
      * @access private
      */
     function execute() {
-        global $wgRequest, $wgScriptPath, $wgCatlinksTop;
+        global $wgRequest, $wgScriptPath;
         $this->skin = $skin = $this->data['skin'];
         $action = $wgRequest->getText( 'action' );
         $sp = $wgScriptPath;
@@ -274,9 +268,8 @@ class CustisRuTemplate extends QuickTemplate {
     <?php if($this->data['newtalk'] ) { ?><div class="usermessage"><?php $this->html('newtalk')  ?></div><?php } ?>
     <?php if($this->data['showjumplinks']) { ?><div id="jump-to-nav"><?php $this->msg('jumpto') ?> <a href="#column-one"><?php $this->msg('jumptonavigation') ?></a>, <a href="#searchInput"><?php $this->msg('jumptosearch') ?></a></div><?php } ?>
     <!-- start content -->
-    <?php if( $this->data['catlinks'] && !empty( $wgCatlinksTop ) ) { ?><div id="catlinks-top"><?php $this->html('catlinks'); ?></div><?php } ?>
     <?php $this->html('bodytext') ?>
-    <?php if( $this->data['catlinks'] && ( !isset( $wgCatlinksTop ) || $wgCatlinksTop !== 'only' ) ) { $this->html('catlinks'); } ?>
+    <?php if( $this->data['catlinks'] ) { $this->html('catlinks'); } ?>
     <!-- end content -->
     <?php if($this->data['dataAfterContent']) { $this->html ('dataAfterContent'); } ?>
     <div class="visualClear"></div>

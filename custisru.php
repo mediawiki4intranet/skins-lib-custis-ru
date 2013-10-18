@@ -94,7 +94,7 @@ class SkinCustisRu extends SkinTemplate {
  * @todo document
  * @ingroup Skins
  */
-class CustisRuTemplate extends QuickTemplate {
+class CustisRuTemplate extends BaseTemplate {
     var $skin;
     /**
      * Template filter callback.
@@ -293,38 +293,40 @@ class CustisRuTemplate extends QuickTemplate {
  </tr>
 </table>
 
-<div id="footer">
 <?php
-        if($this->data['poweredbyico']) { ?>
-                <div id="f-poweredbyico"><?php $this->html('poweredbyico') ?></div>
-<?php   }
-        if($this->data['copyrightico']) { ?>
-                <div id="f-copyrightico"><?php $this->html('copyrightico') ?></div>
-<?php   }
+	$validFooterIcons = $this->getFooterIcons( "icononly" );
+	$validFooterLinks = $this->getFooterLinks( "flat" ); // Additional footer links
 
-        // Generate additional footer links
-        $footerlinks = array(
-            'lastmod', 'viewcount', 'numberofwatchingusers', 'credits', 'copyright',
-            'privacy', 'about', 'disclaimer', 'tagline',
-        );
-        $validFooterLinks = array();
-        foreach( $footerlinks as $aLink ) {
-            if( isset( $this->data[$aLink] ) && $this->data[$aLink] ) {
-                $validFooterLinks[] = $aLink;
-            }
-        }
-        if ( count( $validFooterLinks ) > 0 ) {
-?>          <ul id="f-list">
+	if ( count( $validFooterIcons ) + count( $validFooterLinks ) > 0 ) { ?>
+<div id="footer" role="contentinfo"<?php $this->html('userlangattributes') ?>>
 <?php
-            foreach( $validFooterLinks as $aLink ) {
-                if( isset( $this->data[$aLink] ) && $this->data[$aLink] ) {
-?>                  <li id="<?php echo$aLink?>"><?php $this->html($aLink) ?></li>
-<?php           }
-            }
+		$footerEnd = '</div>';
+	} else {
+		$footerEnd = '';
+	}
+	foreach ( $validFooterIcons as $blockName => $footerIcons ) { ?>
+	<div id="f-<?php echo htmlspecialchars($blockName); ?>ico">
+<?php foreach ( $footerIcons as $icon ) { ?>
+		<?php echo $this->getSkin()->makeFooterIcon( $icon ); ?>
+
+<?php }
 ?>
-            </ul>
-<?php   }
+	</div>
+<?php }
+
+		if ( count( $validFooterLinks ) > 0 ) {
+?>	<ul id="f-list">
+<?php
+			foreach( $validFooterLinks as $aLink ) { ?>
+		<li id="<?php echo $aLink ?>"><?php $this->html($aLink) ?></li>
+<?php
+			}
 ?>
+	</ul>
+<?php	}
+echo $footerEnd;
+?>
+
 </div>
 
 <div class="bottom" style="width: 100%"></div>

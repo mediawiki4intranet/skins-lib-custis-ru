@@ -129,11 +129,12 @@ class CustisRuTemplate extends BaseTemplate {
         <!--[if lt IE 7]><script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath') ?>/common/IEFixes.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"></script>
         <meta http-equiv="imagetoolbar" content="no" /><![endif]-->
 
-        <?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
-
-        <script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/common/wikibits.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"><!-- wikibits js --></script>
         <!-- Head Scripts -->
 <?php $this->html('headscripts') ?>
+
+        <?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
+        <script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/common/wikibits.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"><!-- wikibits js --></script>
+
 <?php   if($this->data['jsvarurl']) { ?>
         <script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('jsvarurl') ?>"><!-- site js --></script>
 <?php   } ?>

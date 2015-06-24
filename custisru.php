@@ -161,7 +161,9 @@ class CustisRuTemplate extends BaseTemplate {
  <td class="header_background_left" rowspan="2">
   <table class="cen">
    <tr>
-    <td width="100%"><a href="<?=$sp?>/"><img align="top" <?= $skin->tooltipAndAccesskey('n-mainpage') ?> height="77" width="210" src="<?=$sp?>/skins/custisru/header_logo.png" /></a></td>
+    <td width="100%" style="text-align: center; vertical-align: middle">
+      <a href="<?=$sp?>/"><img <?= $skin->tooltipAndAccesskey('n-mainpage') ?> src="<?php $this->text('logopath') ?>" style="max-height: 77px" /></a>
+    </td>
     <td><img alt="" align="top" height="77" width="10" src="<?=$sp?>/skins/custisru/header_shadow_left.gif" /></td>
    </tr>
   </table>

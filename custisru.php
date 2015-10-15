@@ -25,9 +25,6 @@
 if( !defined( 'MEDIAWIKI' ) )
     die( -1 );
 
-global $IP;
-require_once( $IP . '/includes/SkinTemplate.php');
-
 // Clear floats for ArticleViewHeader {
 if (!function_exists('articleHeaderClearFloats'))
 {
@@ -67,26 +64,15 @@ class SkinCustisRu extends SkinTemplate {
     }
 
     function setupSkinUserCss( OutputPage $out ) {
-        global $wgHandheldStyle;
-
         parent::setupSkinUserCss( $out );
-
-        // Append to the default screen common & print styles...
-        $out->addStyle( 'custisru/cis.css', 'screen' );
-        if( $wgHandheldStyle )
-            $out->addStyle( $wgHandheldStyle, 'handheld' );
-
-        $out->addStyle( 'monobook/IE50Fixes.css', 'screen', 'lt IE 5.5000' );
-        $out->addStyle( 'monobook/IE55Fixes.css', 'screen', 'IE 5.5000' );
+        $out->addModuleStyles( array(
+            'mediawiki.skinning.interface',
+            'mediawiki.skinning.content.externallinks',
+            'skins.custisru'
+        ) );
         $out->addStyle( 'monobook/IE60Fixes.css', 'screen', 'IE 6' );
         $out->addStyle( 'monobook/IE70Fixes.css', 'screen', 'IE 7' );
         $out->addStyle( 'custisru/IEFixes.css', 'screen', 'IE' );
-
-        $out->addStyle( 'custisru/common.css', 'screen' );
-        $out->addStyle( 'monobook/rtl.css', 'screen', '', 'rtl' );
-
-        $out->addStyle( 'custisru/print.css', 'print' );
-        $out->addStyle( 'common/commonPrint.css', 'print' );
     }
 }
 
@@ -112,50 +98,8 @@ class CustisRuTemplate extends BaseTemplate {
 
         // Suppress warnings to prevent notices about missing indexes in $this->data
         wfSuppressWarnings();
-
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="<?php $this->text('xhtmldefaultnamespace') ?>" <?php
-    foreach($this->data['xhtmlnamespaces'] as $tag => $ns) {
-        ?>xmlns:<?php echo "{$tag}=\"{$ns}\" ";
-    } ?>xml:lang="<?php $this->text('lang') ?>" lang="<?php $this->text('lang') ?>" dir="<?php $this->text('dir') ?>">
-    <head>
-        <meta http-equiv="Content-Type" content="<?php $this->text('mimetype') ?>; charset=<?php $this->text('charset') ?>" />
-        <meta name="google-site-verification" content="anyU3u45qDhtfNNBz4KB8XvxmIlUSVknkU0Nf92117M" />
-        <meta name='yandex-verification' content='61f5d9b5d45859e0' />
-        <?php $this->html('headlinks') ?>
-        <title><?php $this->text('pagetitle') ?></title>
-        <?php $this->html('csslinks') ?>
-
-        <!--[if lt IE 7]><script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath') ?>/common/IEFixes.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"></script>
-        <meta http-equiv="imagetoolbar" content="no" /><![endif]-->
-
-        <!-- Head Scripts -->
-<?php $this->html('headscripts') ?>
-
-        <?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
-        <script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/common/wikibits.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"><!-- wikibits js --></script>
-
-<?php   if($this->data['jsvarurl']) { ?>
-        <script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('jsvarurl') ?>"><!-- site js --></script>
-<?php   } ?>
-<?php   if($this->data['pagecss']) { ?>
-        <style type="text/css"><?php $this->html('pagecss') ?></style>
-<?php   }
-        if($this->data['usercss']) { ?>
-        <style type="text/css"><?php $this->html('usercss') ?></style>
-<?php   }
-        if($this->data['userjs']) { ?>
-        <script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('userjs' ) ?>"></script>
-<?php   }
-        if($this->data['userjsprev']) { ?>
-        <script type="<?php $this->text('jsmimetype') ?>"><?php $this->html('userjsprev') ?></script>
-<?php   }
-        if($this->data['trackbackhtml']) print $this->data['trackbackhtml']; ?>
-    </head>
-<body<?php if(isset($this->data['body_ondblclick'])) { ?> ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>
-<?php if(isset($this->data['body_onload'])) { ?> onload="<?php $this->text('body_onload') ?>"<?php } ?>
- class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?> <?php $this->text('skinnameclass') ?>">
-
+        $this->html( 'headelement' );
+?>
 <table class="cen header screenonly">
 <tr>
  <td class="header_background_left" rowspan="2">
@@ -288,7 +232,7 @@ class CustisRuTemplate extends BaseTemplate {
 
 <div id="prefooter1"></div>
 
-<table bgcolor="#FBFCFD" class="screenonly">
+<table bgcolor="#FBFCFD" class="screenonly" style="height: 15px; font-size: 1px">
  <tr>
   <td class="separator_left" width="18%"></td>
   <td class="separator_right" width="82%"></td>
@@ -331,19 +275,14 @@ echo $footerEnd;
 ?>
 
 </div>
+<div class="bottom"></div>
 
-<div class="bottom" style="width: 100%"></div>
-<?php $this->html('bottomscripts'); /* JS call to runBodyOnloadHook */ ?>
-<?php $this->html('reporttime') ?>
-<?php if ( $this->data['debug'] ): ?>
-<!-- Debug output:
-<?php $this->text( 'debug' ); ?>
-
--->
-<?php endif; ?>
-</body></html>
 <?php
-    wfRestoreWarnings();
+        $this->printTrail();
+        echo Html::closeElement( 'body' );
+        echo Html::closeElement( 'html' );
+        echo "\n";
+        wfRestoreWarnings();
     } // end of execute() method
 
     /*************************************************************************************************/

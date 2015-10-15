@@ -1,0 +1,34 @@
+{
+	"name": "CustisRu",
+	"author": [
+		"Vitaliy Filippov",
+		"..."
+	],
+	"url": "http://wiki.4intra.net/CustisSkin",
+	"description": "lib.custis.ru-like skin",
+	"name": "CustisRu",
+	"license-name": "GPL-2.0+",
+	"type": "skin",
+	"ValidSkinNames": {
+		"custisru": "CustisRu"
+	},
+	"ResourceModules": {
+		"skins.custisru": {
+			"position": "top",
+			"styles": {
+				"cis.css": { "media": "screen" },
+				"common.css": { "media": "screen" },
+				"print.css": { "media": "print" }
+			}
+		}
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "",
+		"remoteSkinPath": "custisru"
+	},
+	"AutoloadClasses": {
+		"SkinCustisRu": "custisru.php",
+		"CustisRuTemplate": "custisru.php"
+	},
+	"manifest_version": 1
+}
